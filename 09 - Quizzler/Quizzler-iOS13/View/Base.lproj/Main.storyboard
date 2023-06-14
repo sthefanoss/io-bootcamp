@@ -42,7 +42,7 @@
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
                                         <connections>
-                                            <action selector="onTrueClick:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Vsl-wf-xSE"/>
+                                            <action selector="onClick:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Vsl-wf-xSE"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tbn-vQ-GyC">
@@ -56,7 +56,7 @@
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
                                         <connections>
-                                            <action selector="onFalseClick:" destination="BYZ-38-t0r" eventType="touchUpInside" id="oWW-Ad-7pN"/>
+                                            <action selector="onClick:" destination="BYZ-38-t0r" eventType="touchUpInside" id="o2s-dT-k8b"/>
                                         </connections>
                                     </button>
                                     <progressView opaque="NO" contentMode="scaleToFill" progressViewStyle="bar" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="TXm-qh-7Xg">
@@ -87,7 +87,7 @@
                     <connections>
                         <outlet property="falseButton" destination="tbn-vQ-GyC" id="XKQ-BJ-lkf"/>
                         <outlet property="progressBar" destination="TXm-qh-7Xg" id="HoT-mU-4Hg"/>
-                        <outlet property="questionLabel" destination="rSI-li-mhO" id="HlF-xV-U64"/>
+                        <outlet property="textLabel" destination="rSI-li-mhO" id="HlF-xV-U64"/>
                         <outlet property="trueButton" destination="oVw-Hl-IRe" id="hHI-0E-0PI"/>
                     </connections>
                 </viewController>
