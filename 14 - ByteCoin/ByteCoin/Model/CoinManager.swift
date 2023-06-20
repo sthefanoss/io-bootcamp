@@ -31,10 +31,9 @@ struct CoinManager {
                 return
             }
             
-            
             do {
                 let coinData = try JSONDecoder().decode(CoinData.self, from: data!)
-                let model = try CoinModel(
+                let model = CoinModel(
                     assetIdBase: coinData.assetIdBase,
                     assetIdQuote: coinData.assetIdQuote,
                     rate: coinData.rate
@@ -50,6 +49,4 @@ struct CoinManager {
         task.resume()
         
     }
-    
-    
 }
