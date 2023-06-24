@@ -14,12 +14,21 @@ class ItemsManager {
     
     
     func load () {
-        items = decode(input: UserDefaults.standard.data(forKey: key)) as [Item]? ?? []
+        let decoder = PropertyListDecoder()
+        do {
+            let data = UserDefaults.standard.data(forKey: key)
+            if(data == nil) { return items = [] }
+            items = try decoder.decode([Item].self, from: data!)
+        } catch let err {
+            items = []
+            print("error decoding \(err)")
+        }
     }
     
     private func save() {
+        let encoder = PropertyListEncoder()
         UserDefaults.standard.set(
-            encode(input: items),
+            try! encoder.encode(items),
             forKey: key
         )
     }
@@ -41,25 +50,4 @@ class ItemsManager {
 struct Item : Codable {
     let description : String
     let done : Bool
-}
-
-private func encode<T>(input: T?)  -> Data? where T:Encodable {
-    if(input == nil) { return nil }
-    do {
-        return try JSONEncoder().encode(input!)
-    } catch let err {
-        print(err)
-        return nil
-    }
-}
-
-
-private func decode<T>(input: Data?) -> T? where T:Codable {
-    if(input == nil) { return nil }
-    do {
-        return try JSONDecoder().decode(T.self, from: input!)
-    } catch let err {
-        print(err)
-        return nil
-    }
 }
