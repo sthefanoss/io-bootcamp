@@ -9,28 +9,28 @@
 import Foundation
 
 class ItemsManager {
-    private let key = "TodoList"
+    private let dataFilePath = FileManager.default.urls(for: .documentDirectory, in:.userDomainMask).first?.appendingPathComponent("Items.plist")
     var items = [Item]()
     
     
     func load () {
         let decoder = PropertyListDecoder()
         do {
-            let data = UserDefaults.standard.data(forKey: key)
-            if(data == nil) { return items = [] }
-            items = try decoder.decode([Item].self, from: data!)
+            let data = try Data(contentsOf: dataFilePath!)
+            items = try decoder.decode([Item].self, from: data)
         } catch let err {
-            items = []
-            print("error decoding \(err)")
+            print("error load \(err)")
         }
     }
     
     private func save() {
         let encoder = PropertyListEncoder()
-        UserDefaults.standard.set(
-            try! encoder.encode(items),
-            forKey: key
-        )
+        do {
+            let data = try encoder.encode(items)
+            try data.write(to: dataFilePath!)
+        } catch let err {
+            print("error save \(err)")
+        }
     }
     
     func insert(description : String) {
