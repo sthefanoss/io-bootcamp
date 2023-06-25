@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="167" id="KGk-i7-Jjw" customClass="ItemTableViewCell" customModule="Todoey" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="380" height="167"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="380" height="167"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="b86-Ih-Ug2" userLabel="Delete Button">
+                        <rect key="frame" x="310" y="10" width="20" height="20"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="20" id="VoL-MQ-ueu"/>
+                            <constraint firstAttribute="height" constant="20" id="tAO-Lw-eMs"/>
+                        </constraints>
+                        <buttonConfiguration key="configuration" style="plain">
+                            <imageReference key="image" image="delete.left" catalog="system" symbolScale="default"/>
+                        </buttonConfiguration>
+                        <connections>
+                            <action selector="deletePressed:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="MRU-Ew-El8"/>
+                        </connections>
+                    </button>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Njv-jz-nFY">
+                        <rect key="frame" x="350" y="10" width="20" height="20"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="20" id="RcM-E4-WME"/>
+                            <constraint firstAttribute="width" constant="20" id="S11-9B-vhf"/>
+                        </constraints>
+                        <buttonConfiguration key="configuration" style="plain">
+                            <imageReference key="image" image="checkmark.square" catalog="system" symbolScale="default"/>
+                        </buttonConfiguration>
+                        <connections>
+                            <action selector="markPressed:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="ke0-4V-o6k"/>
+                        </connections>
+                    </button>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum " lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qs6-5g-8v8">
+                        <rect key="frame" x="20" y="10" width="270" height="147"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="Njv-jz-nFY" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="CM3-MP-szV"/>
+                    <constraint firstItem="b86-Ih-Ug2" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="JgF-dk-tB7"/>
+                    <constraint firstAttribute="trailing" secondItem="Njv-jz-nFY" secondAttribute="trailing" constant="10" id="Log-al-KA7"/>
+                    <constraint firstItem="qs6-5g-8v8" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="MA7-1f-YuZ"/>
+                    <constraint firstItem="qs6-5g-8v8" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="QLD-yY-Dyz"/>
+                    <constraint firstAttribute="bottom" secondItem="qs6-5g-8v8" secondAttribute="bottom" constant="10" id="XZQ-pf-S2I"/>
+                    <constraint firstItem="b86-Ih-Ug2" firstAttribute="leading" secondItem="qs6-5g-8v8" secondAttribute="trailing" constant="20" id="e0Z-68-zwD"/>
+                    <constraint firstItem="Njv-jz-nFY" firstAttribute="leading" secondItem="b86-Ih-Ug2" secondAttribute="trailing" constant="20" id="g3C-gi-M5P"/>
+                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="Njv-jz-nFY" secondAttribute="bottom" constant="10" id="q6h-pr-ZMq"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="markButton" destination="Njv-jz-nFY" id="5vv-Fp-UiY"/>
+                <outlet property="titleLabel" destination="qs6-5g-8v8" id="qxZ-FF-08o"/>
+            </connections>
+            <point key="canvasLocation" x="137.40458015267174" y="67.25352112676056"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="checkmark.square" catalog="system" width="128" height="114"/>
+        <image name="delete.left" catalog="system" width="128" height="102"/>
+    </resources>
+</document>

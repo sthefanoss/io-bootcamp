@@ -14,6 +14,10 @@ class TodoListViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         itemsManager.load()
+        tableView.register(
+            UINib(nibName: "ItemTableViewCell", bundle: nil),
+            forCellReuseIdentifier: "ItemTableViewCell"
+        )
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -22,16 +26,13 @@ class TodoListViewController: UITableViewController {
     
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "TodoItemCell", for: indexPath)
-        let item = itemsManager.items[indexPath.row]
-        cell.textLabel?.text = item.title
-        cell.accessoryType = item.done ? .checkmark : .none
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ItemTableViewCell", for: indexPath) as! ItemTableViewCell
+        cell.delegate = self
+        cell.update(value: itemsManager.items[indexPath.row])
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        itemsManager.toggle(at: indexPath.row)
-        tableView.reloadData()
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
@@ -51,8 +52,28 @@ class TodoListViewController: UITableViewController {
         
         alert.addAction(action)
         
-        present(alert,animated: true, completion: nil)
-        
+        present(alert,animated: true)
     }
 }
 
+extension TodoListViewController:ItemTableViewCellDelegate {
+    func deleteCall(_ item: ItemEntity) {
+        let alert = UIAlertController(title: "Are you sure?", message: "", preferredStyle: .alert)
+        
+        let actionNo = UIAlertAction(title: "No", style: .default) { (action) in print("No") }
+        let actionYes = UIAlertAction(title: "Yes", style: .default) { (action) in
+            self.itemsManager.delete(item)
+            self.tableView.reloadData()
+        }
+    
+        alert.addAction(actionNo)
+        alert.addAction(actionYes)
+        
+        present(alert,animated: true)
+    }
+    
+    func toggleCall(_ item: ItemEntity) {
+        itemsManager.toggle(item)
+        tableView.reloadData()
+    }
+}

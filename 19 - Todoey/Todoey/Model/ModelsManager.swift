@@ -36,6 +36,16 @@ struct ModelsManager {
         }
     }
     
+    mutating func delete<T:NSManagedObject>(obj: T) {
+        let context = persistentContainer.viewContext
+        context.delete(obj)
+        do {
+            try context.save()
+        } catch {
+            print("error \(error)")
+        }
+    }
+    
     mutating func getEntity<T:NSManagedObject> () -> T {
         return T(context: persistentContainer.viewContext)
     }

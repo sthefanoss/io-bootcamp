@@ -27,8 +27,13 @@ class ItemsManager {
         ModelsManager.instance.save()
     }
     
-    func toggle(at index : Int) {
-        items[index].done = !items[index].done
+    func toggle(_ item : ItemEntity) {
+        item.done = !item.done
         ModelsManager.instance.save()
+    }
+    
+    func delete(_ item : ItemEntity) {
+        items.removeAll(where: { $0 == item })
+        ModelsManager.instance.delete(obj: item)
     }
 }
