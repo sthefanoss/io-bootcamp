@@ -24,13 +24,12 @@ class TodoListViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TodoItemCell", for: indexPath)
         let item = itemsManager.items[indexPath.row]
-        cell.textLabel?.text = item.description
+        cell.textLabel?.text = item.title
         cell.accessoryType = item.done ? .checkmark : .none
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let cell = tableView.cellForRow(at: indexPath)!
         itemsManager.toggle(at: indexPath.row)
         tableView.reloadData()
         tableView.deselectRow(at: indexPath, animated: true)

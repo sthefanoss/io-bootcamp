@@ -7,47 +7,28 @@
 //
 
 import Foundation
+import CoreData
+
 
 class ItemsManager {
     private let dataFilePath = FileManager.default.urls(for: .documentDirectory, in:.userDomainMask).first?.appendingPathComponent("Items.plist")
-    var items = [Item]()
+    var items = [ItemEntity]()
     
     
     func load () {
-        let decoder = PropertyListDecoder()
-        do {
-            let data = try Data(contentsOf: dataFilePath!)
-            items = try decoder.decode([Item].self, from: data)
-        } catch let err {
-            print("error load \(err)")
-        }
-    }
-    
-    private func save() {
-        let encoder = PropertyListEncoder()
-        do {
-            let data = try encoder.encode(items)
-            try data.write(to: dataFilePath!)
-        } catch let err {
-            print("error save \(err)")
-        }
+        items = ModelsManager.instance.load() as [ItemEntity]? ?? []
     }
     
     func insert(description : String) {
-        items.append(Item(description: description, done: false))
-        save()
+        let newEntity = ModelsManager.instance.getEntity() as ItemEntity
+        newEntity.title = description
+        newEntity.done = false
+        items.append(newEntity)
+        ModelsManager.instance.save()
     }
     
     func toggle(at index : Int) {
-        items[index] = Item(
-            description: items[index].description,
-            done: !items[index].done
-        )
-        save()
+        items[index].done = !items[index].done
+        ModelsManager.instance.save()
     }
-}
-
-struct Item : Codable {
-    let description : String
-    let done : Bool
 }

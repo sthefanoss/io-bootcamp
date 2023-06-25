@@ -1,0 +1,42 @@
+//
+//  ModelsManager.swift
+//  Todoey
+//
+//  Created by Sthefano Schiavon on 25/06/23.
+//  Copyright © 2023 App Brewery. All rights reserved.
+//
+
+import Foundation
+import CoreData
+
+struct ModelsManager {
+    private init() {}
+    static var instance = ModelsManager()
+    
+    lazy var persistentContainer : NSPersistentContainer = {
+        let container = NSPersistentContainer(name: "Models")
+        container.loadPersistentStores { storeDescription, error in
+            if let error = error as NSError? {
+                fatalError("Unresolved error \(error), \(error.userInfo)")
+            }
+            
+        }
+        return container
+    }()
+    
+    mutating  func load<T:NSManagedObject>() -> [T]? {
+        let context = persistentContainer.viewContext
+        return try? context.fetch(T.fetchRequest()) as? [T]
+    }
+    
+    mutating func save() {
+        let context = persistentContainer.viewContext
+        if context.hasChanges {
+            try? context.save()
+        }
+    }
+    
+    mutating func getEntity<T:NSManagedObject> () -> T {
+        return T(context: persistentContainer.viewContext)
+    }
+}
