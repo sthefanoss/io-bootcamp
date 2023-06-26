@@ -9,10 +9,12 @@
 import UIKit
 
 class TodoListViewController: UITableViewController {
+    @IBOutlet weak var searchBar: UISearchBar!
     let itemsManager = ItemsManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        searchBar.delegate = self
         itemsManager.load()
         tableView.register(
             UINib(nibName: "ItemTableViewCell", bundle: nil),
@@ -74,6 +76,14 @@ extension TodoListViewController:ItemTableViewCellDelegate {
     
     func toggleCall(_ item: ItemEntity) {
         itemsManager.toggle(item)
+        tableView.reloadData()
+    }
+}
+
+extension TodoListViewController: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if(searchText.isEmpty) { searchBar.resignFirstResponder() }
+        itemsManager.load(titlePattern: searchText)
         tableView.reloadData()
     }
 }

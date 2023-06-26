@@ -24,9 +24,11 @@ struct ModelsManager {
         return container
     }()
     
-    mutating  func load<T:NSManagedObject>() -> [T]? {
+    mutating func load<T:NSManagedObject>(requestBuilder: ((NSFetchRequest<any NSFetchRequestResult>) -> Void)? = nil) -> [T]? {
         let context = persistentContainer.viewContext
-        return try? context.fetch(T.fetchRequest()) as? [T]
+        let request = T.fetchRequest()
+        requestBuilder?(request)
+        return try? context.fetch(request) as? [T]
     }
     
     mutating func save() {

@@ -15,8 +15,14 @@ class ItemsManager {
     var items = [ItemEntity]()
     
     
-    func load () {
-        items = ModelsManager.instance.load() as [ItemEntity]? ?? []
+    func load (titlePattern : String? = nil) {
+        if(titlePattern == nil || titlePattern!.isEmpty) {
+            items = ModelsManager.instance.load() as [ItemEntity]? ?? []
+        } else {
+            items = ModelsManager.instance.load { request in
+                request.predicate = NSPredicate(format: "title CONTAINS[cp] %@", titlePattern!)
+            } ?? []
+        }
     }
     
     func insert(description : String) {
