@@ -82,7 +82,9 @@ extension TodoListViewController:ItemTableViewCellDelegate {
 
 extension TodoListViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        if(searchText.isEmpty) { searchBar.resignFirstResponder() }
+        if(searchText.isEmpty) {
+            DispatchQueue.main.async { searchBar.resignFirstResponder() }
+        }
         itemsManager.load(titlePattern: searchText)
         tableView.reloadData()
     }
