@@ -8,12 +8,14 @@
 
 import UIKit
 
-class TodoListViewController: UITableViewController {
+class ItemsViewController: UITableViewController {
     @IBOutlet weak var searchBar: UISearchBar!
-    let itemsManager = ItemsManager()
+    var itemsManager : ItemsManager!
+    var category : CategoryEntity!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        itemsManager = ItemsManager(of: category)
         searchBar.delegate = self
         itemsManager.load()
         tableView.register(
@@ -58,7 +60,7 @@ class TodoListViewController: UITableViewController {
     }
 }
 
-extension TodoListViewController:ItemTableViewCellDelegate {
+extension ItemsViewController:ItemTableViewCellDelegate {
     func deleteCall(_ item: ItemEntity) {
         let alert = UIAlertController(title: "Are you sure?", message: "", preferredStyle: .alert)
         
@@ -80,7 +82,7 @@ extension TodoListViewController:ItemTableViewCellDelegate {
     }
 }
 
-extension TodoListViewController: UISearchBarDelegate {
+extension ItemsViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if(searchText.isEmpty) {
             DispatchQueue.main.async { searchBar.resignFirstResponder() }

@@ -11,16 +11,22 @@ import CoreData
 
 
 class ItemsManager {
-    private let dataFilePath = FileManager.default.urls(for: .documentDirectory, in:.userDomainMask).first?.appendingPathComponent("Items.plist")
+    init(of category : CategoryEntity) {
+        self.category = category
+    }
+    
+    let category : CategoryEntity
     var items = [ItemEntity]()
     
     
     func load (titlePattern : String? = nil) {
         if(titlePattern == nil || titlePattern!.isEmpty) {
-            items = ModelsManager.instance.load() as [ItemEntity]? ?? []
+            items = ModelsManager.instance.load { request in
+                request.predicate = NSPredicate(format: "category.name MATCHES %@", self.category.name!)
+            } ?? []
         } else {
             items = ModelsManager.instance.load { request in
-                request.predicate = NSPredicate(format: "title CONTAINS[cp] %@", titlePattern!)
+                request.predicate = NSPredicate(format: "title CONTAINS[cp] %@ AND category.name MATCHES %@", titlePattern!, self.category.name!)
             } ?? []
         }
     }
@@ -29,6 +35,7 @@ class ItemsManager {
         let newEntity = ModelsManager.instance.getEntity() as ItemEntity
         newEntity.title = description
         newEntity.done = false
+        newEntity.category = self.category
         items.append(newEntity)
         ModelsManager.instance.save()
     }
